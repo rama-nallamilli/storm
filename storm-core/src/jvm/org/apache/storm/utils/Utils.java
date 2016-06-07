@@ -34,7 +34,6 @@ import clojure.lang.RT;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.apache.commons.io.input.ClassLoaderObjectInputStream;
 import org.apache.commons.lang.StringUtils;
 import org.apache.curator.ensemble.exhibitor.DefaultExhibitorRestClient;
 import org.apache.curator.ensemble.exhibitor.ExhibitorEnsembleProvider;
@@ -171,7 +170,7 @@ public class Utils {
     public static <T> T javaDeserialize(byte[] serialized, Class<T> clazz) {
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(serialized);
-            ObjectInputStream ois = new ClassLoaderObjectInputStream(cl, bis);
+            ObjectInputStream ois = new ObjectInputStream(bis);
             Object ret = ois.readObject();
             ois.close();
             return (T)ret;
